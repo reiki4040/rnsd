@@ -12,9 +12,11 @@ import (
 )
 
 const (
-	OPT_NAMESPACE_ID = "namespace-id"
-	OPT_SERVICE_ID   = "service-id"
-	OPT_TTL          = "ttl"
+	OPT_NAMESPACE_ID       = "namespace-id"
+	OPT_NAMESPACE_ID_SHORT = "ns"
+	OPT_SERVICE_ID         = "service-id"
+	OPT_SERVICE_ID_SHORT   = "srv"
+	OPT_TTL                = "ttl"
 )
 
 func CmdListNamespaces(c *cli.Context) error {
@@ -117,7 +119,7 @@ func main() {
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:     OPT_NAMESPACE_ID,
-						Aliases:  nil,
+						Aliases:  []string{OPT_NAMESPACE_ID_SHORT},
 						Usage:    "specify namespace id (like: ns-XXXXXXXXX)",
 						Required: true,
 					},
@@ -131,7 +133,7 @@ func main() {
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:     OPT_SERVICE_ID,
-						Aliases:  nil,
+						Aliases:  []string{OPT_SERVICE_ID_SHORT},
 						Usage:    "specify service id (like: srv-XXXXXXXXX)",
 						Required: true,
 					},
