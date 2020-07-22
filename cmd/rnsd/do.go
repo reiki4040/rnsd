@@ -13,7 +13,7 @@ func DoListNamespaces(ctx context.Context, region string) error {
 		return err
 	}
 
-	nsList, err := client.ListNamespaces()
+	nsList, err := client.ListNamespaces(ctx)
 	if err != nil {
 		return err
 	}
@@ -30,12 +30,12 @@ func DoListServices(ctx context.Context, region, nsId string) error {
 		return err
 	}
 
-	ns, err := client.GetNamespace(nsId)
+	ns, err := client.GetNamespace(ctx, nsId)
 	if err != nil {
 		return err
 	}
 
-	serviceList, err := client.ListServices(nsId)
+	serviceList, err := client.ListServices(ctx, nsId)
 	if err != nil {
 		return err
 	}
@@ -59,7 +59,7 @@ func DoModifyTTL(ctx context.Context, region, sId string, ttl int64) error {
 		return err
 	}
 
-	err = client.UpdateTTL(sId, ttl)
+	err = client.UpdateTTL(ctx, sId, ttl)
 	if err != nil {
 		return err
 	}

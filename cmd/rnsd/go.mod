@@ -8,7 +8,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
-	github.com/reiki4040/rnsd v0.0.0-20200722151054-cb1f90d4072c
+	github.com/reiki4040/rnsd v0.0.0-20200722155751-7dcf8a937db5
 	github.com/stretchr/testify v1.6.1 // indirect
 	github.com/urfave/cli/v2 v2.2.0
 	golang.org/x/net v0.0.0-20200707034311-ab3426394381 // indirect

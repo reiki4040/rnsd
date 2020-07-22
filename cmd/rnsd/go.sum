@@ -29,6 +29,8 @@ github.com/reiki4040/rnsd v0.0.0-20200722141851-71a67de4728d h1:cuJiY65sRQQao6Ri
 github.com/reiki4040/rnsd v0.0.0-20200722141851-71a67de4728d/go.mod h1:ttEuTHcDpu47EsfXVtP0OQ929BwPAiI+gTwcqlzWHG8=
 github.com/reiki4040/rnsd v0.0.0-20200722151054-cb1f90d4072c h1:AdOfN/2J7hm2JAbKf13ONtJK/0MQl3LBj0XKAwtobiQ=
 github.com/reiki4040/rnsd v0.0.0-20200722151054-cb1f90d4072c/go.mod h1:ttEuTHcDpu47EsfXVtP0OQ929BwPAiI+gTwcqlzWHG8=
+github.com/reiki4040/rnsd v0.0.0-20200722155751-7dcf8a937db5 h1:GHS2BsKe0focWLo2tfnyDApjoZb8Godxqt0Wu8dwQw0=
+github.com/reiki4040/rnsd v0.0.0-20200722155751-7dcf8a937db5/go.mod h1:ttEuTHcDpu47EsfXVtP0OQ929BwPAiI+gTwcqlzWHG8=
 github.com/russross/blackfriday/v2 v2.0.1 h1:lPqVAte+HuHNfhJ/0LC98ESWRz8afy9tM/0RK8m9o+Q=
 github.com/russross/blackfriday/v2 v2.0.1/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
 github.com/shurcooL/sanitized_anchor_name v1.0.0 h1:PdmoCO6wvbs+7yrJyMORt4/BmY5IYyJwS/kOiWx8mHo=
