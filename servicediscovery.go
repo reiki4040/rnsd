@@ -71,7 +71,10 @@ func (c *Client) UpdateTTL(serviceId string, ttl int64) error {
 		Service: &servicediscovery.ServiceChange{
 			DnsConfig: &servicediscovery.DnsConfigChange{
 				DnsRecords: []*servicediscovery.DnsRecord{
-					{TTL: aws.Int64(ttl)},
+					{
+						Type: aws.String(servicediscovery.RecordTypeSrv),
+						TTL:  aws.Int64(ttl),
+					},
 				},
 			},
 		},
