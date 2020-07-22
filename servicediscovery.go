@@ -32,6 +32,19 @@ func (c *Client) ListNamespaces() ([]*servicediscovery.NamespaceSummary, error) 
 	return resp.Namespaces, nil
 }
 
+func (c *Client) GetNamespace(namespaceId string) (*servicediscovery.Namespace, error) {
+	input := &servicediscovery.GetNamespaceInput{
+		Id: aws.String(namespaceId),
+	}
+
+	resp, err := c.client.GetNamespace(input)
+	if err != nil {
+		return nil, err
+	}
+
+	return resp.Namespace, nil
+}
+
 func (c *Client) ListServices(nsIds ...string) ([]*servicediscovery.ServiceSummary, error) {
 	f := &servicediscovery.ServiceFilter{
 		Name: aws.String("NAMESPACE_ID"),
@@ -63,6 +76,19 @@ func (c *Client) ListServices(nsIds ...string) ([]*servicediscovery.ServiceSumma
 	}
 
 	return resp.Services, nil
+}
+
+func (c *Client) GetService(serviceId string) (*servicediscovery.Service, error) {
+	input := &servicediscovery.GetServiceInput{
+		Id: aws.String(serviceId),
+	}
+
+	resp, err := c.client.GetService(input)
+	if err != nil {
+		return nil, err
+	}
+
+	return resp.Service, nil
 }
 
 func (c *Client) UpdateTTL(serviceId string, ttl int64) error {
