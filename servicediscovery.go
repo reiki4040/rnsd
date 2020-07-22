@@ -1,6 +1,7 @@
 package rnsd
 
 import (
+	"context"
 	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -21,10 +22,10 @@ type Client struct {
 }
 
 // not support paging
-func (c *Client) ListNamespaces() ([]*servicediscovery.NamespaceSummary, error) {
+func (c *Client) ListNamespaces(ctx context.Context) ([]*servicediscovery.NamespaceSummary, error) {
 	input := &servicediscovery.ListNamespacesInput{}
 
-	resp, err := c.client.ListNamespaces(input)
+	resp, err := c.client.ListNamespacesWithContext(ctx, input)
 	if err != nil {
 		return nil, err
 	}
@@ -32,12 +33,12 @@ func (c *Client) ListNamespaces() ([]*servicediscovery.NamespaceSummary, error) 
 	return resp.Namespaces, nil
 }
 
-func (c *Client) GetNamespace(namespaceId string) (*servicediscovery.Namespace, error) {
+func (c *Client) GetNamespace(ctx context.Context, namespaceId string) (*servicediscovery.Namespace, error) {
 	input := &servicediscovery.GetNamespaceInput{
 		Id: aws.String(namespaceId),
 	}
 
-	resp, err := c.client.GetNamespace(input)
+	resp, err := c.client.GetNamespaceWithContext(ctx, input)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +46,7 @@ func (c *Client) GetNamespace(namespaceId string) (*servicediscovery.Namespace, 
 	return resp.Namespace, nil
 }
 
-func (c *Client) ListServices(nsIds ...string) ([]*servicediscovery.ServiceSummary, error) {
+func (c *Client) ListServices(ctx context.Context, nsIds ...string) ([]*servicediscovery.ServiceSummary, error) {
 	f := &servicediscovery.ServiceFilter{
 		Name: aws.String("NAMESPACE_ID"),
 	}
@@ -70,7 +71,7 @@ func (c *Client) ListServices(nsIds ...string) ([]*servicediscovery.ServiceSumma
 		Filters: []*servicediscovery.ServiceFilter{f},
 	}
 
-	resp, err := c.client.ListServices(input)
+	resp, err := c.client.ListServicesWithContext(ctx, input)
 	if err != nil {
 		return nil, err
 	}
@@ -78,12 +79,12 @@ func (c *Client) ListServices(nsIds ...string) ([]*servicediscovery.ServiceSumma
 	return resp.Services, nil
 }
 
-func (c *Client) GetService(serviceId string) (*servicediscovery.Service, error) {
+func (c *Client) GetService(ctx context.Context, serviceId string) (*servicediscovery.Service, error) {
 	input := &servicediscovery.GetServiceInput{
 		Id: aws.String(serviceId),
 	}
 
-	resp, err := c.client.GetService(input)
+	resp, err := c.client.GetServiceWithContext(ctx, input)
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +92,7 @@ func (c *Client) GetService(serviceId string) (*servicediscovery.Service, error)
 	return resp.Service, nil
 }
 
-func (c *Client) UpdateTTL(serviceId string, ttl int64) error {
+func (c *Client) UpdateTTL(ctx context.Context, serviceId string, ttl int64) error {
 	input := &servicediscovery.UpdateServiceInput{
 		Id: aws.String(serviceId),
 		Service: &servicediscovery.ServiceChange{
@@ -107,7 +108,7 @@ func (c *Client) UpdateTTL(serviceId string, ttl int64) error {
 	}
 
 	// response has OperationId however does not return
-	_, err := c.client.UpdateService(input)
+	_, err := c.client.UpdateServiceWithContext(ctx, input)
 	if err != nil {
 		return err
 	}
