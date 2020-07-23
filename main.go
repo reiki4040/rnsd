@@ -7,6 +7,9 @@ import (
 )
 
 const (
+	OPT_REGION       = "region"
+	OPT_REGION_SHORT = "r"
+
 	OPT_NAMESPACE_ID       = "namespace-id"
 	OPT_NAMESPACE_ID_SHORT = "n"
 	OPT_SERVICE_ID         = "service-id"
@@ -19,6 +22,16 @@ var (
 	app = &cli.App{
 		Name:  "rnsd",
 		Usage: "control AWS Service Discovery",
+		Flags: []cli.Flag{
+			&cli.StringFlag{
+				Name:     OPT_REGION,
+				Aliases:  []string{OPT_REGION_SHORT},
+				Usage:    "specify AWS region",
+				Required: false,
+				Value:    "ap-northeast-1",
+			},
+		},
+
 		Commands: []*cli.Command{
 			cmdNamespaces,
 			cmdServices,
@@ -28,7 +41,7 @@ var (
 
 	cmdNamespaces = &cli.Command{
 		Name:    "namespaces",
-		Aliases: []string{"lns"},
+		Aliases: []string{"ns"},
 
 		Usage:  "show namespaces",
 		Action: CmdListNamespaces,
@@ -36,7 +49,7 @@ var (
 
 	cmdServices = &cli.Command{
 		Name:    "services",
-		Aliases: []string{"lsrv"},
+		Aliases: []string{"srv"},
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:     OPT_NAMESPACE_ID,
@@ -80,22 +93,25 @@ func main() {
 }
 
 func CmdListNamespaces(c *cli.Context) error {
-	// no option and args
-	return DoListNamespaces(c.Context, "ap-northeast-1")
+	r := c.String(OPT_REGION)
+
+	return DoListNamespaces(c.Context, r)
 }
 
 func CmdListServices(c *cli.Context) error {
 	// option and args
+	r := c.String(OPT_REGION)
 	nsId := c.String(OPT_NAMESPACE_ID)
 	if nsId == "" {
 		return fmt.Errorf("namespace id is empty.")
 	}
 
-	return DoListServices(c.Context, "ap-northeast-1", nsId)
+	return DoListServices(c.Context, r, nsId)
 }
 
 func CmdModifyTTL(c *cli.Context) error {
 	// option and args
+	r := c.String(OPT_REGION)
 	sId := c.String(OPT_SERVICE_ID)
 	if sId == "" {
 		return fmt.Errorf("service id is empty.")
@@ -105,5 +121,5 @@ func CmdModifyTTL(c *cli.Context) error {
 		return fmt.Errorf("invalid TTL given.")
 	}
 
-	return DoModifyTTL(c.Context, "ap-northeast-1", sId, ttl)
+	return DoModifyTTL(c.Context, r, sId, ttl)
 }

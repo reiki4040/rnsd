@@ -9,7 +9,7 @@ import (
 )
 
 func NewClient(region string) (*Client, error) {
-	sess := session.Must(session.NewSession(&aws.Config{Region: aws.String("ap-northeast-1")}))
+	sess := session.Must(session.NewSession(&aws.Config{Region: aws.String(region)}))
 	client := servicediscovery.New(sess)
 
 	return &Client{
