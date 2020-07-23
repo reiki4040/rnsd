@@ -59,7 +59,22 @@ func DoModifyTTL(ctx context.Context, region, sId string, ttl int64) error {
 		return err
 	}
 
-	err = client.UpdateTTL(ctx, sId, ttl)
+	s, err := client.GetService(ctx, sId)
+	if err != nil {
+		return err
+	}
+
+	if s.DnsConfig == nil {
+		return fmt.Errorf("service does not have DNS")
+	}
+
+	if s.DnsConfig.DnsRecords == nil || len(s.DnsConfig.DnsRecords) == 0 {
+		return fmt.Errorf("service does not have DNS")
+	}
+
+	recordType := s.DnsConfig.DnsRecords[0].Type
+
+	err = client.UpdateTTL(ctx, sId, recordType, ttl)
 	if err != nil {
 		return err
 	}

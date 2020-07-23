@@ -92,14 +92,14 @@ func (c *Client) GetService(ctx context.Context, serviceId string) (*servicedisc
 	return resp.Service, nil
 }
 
-func (c *Client) UpdateTTL(ctx context.Context, serviceId string, ttl int64) error {
+func (c *Client) UpdateTTL(ctx context.Context, serviceId, recordType string, ttl int64) error {
 	input := &servicediscovery.UpdateServiceInput{
 		Id: aws.String(serviceId),
 		Service: &servicediscovery.ServiceChange{
 			DnsConfig: &servicediscovery.DnsConfigChange{
 				DnsRecords: []*servicediscovery.DnsRecord{
 					{
-						Type: aws.String(servicediscovery.RecordTypeSrv),
+						Type: aws.String(recordType),
 						TTL:  aws.Int64(ttl),
 					},
 				},
