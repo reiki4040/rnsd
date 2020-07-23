@@ -1,4 +1,4 @@
-package rnsd
+package main
 
 import (
 	"context"

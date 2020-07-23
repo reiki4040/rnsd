@@ -3,12 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
+
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/reiki4040/rnsd"
 )
 
 func DoListNamespaces(ctx context.Context, region string) error {
-	client, err := rnsd.NewClient(region)
+	client, err := NewClient(region)
 	if err != nil {
 		return err
 	}
@@ -25,7 +25,7 @@ func DoListNamespaces(ctx context.Context, region string) error {
 	return nil
 }
 func DoListServices(ctx context.Context, region, nsId string) error {
-	client, err := rnsd.NewClient(region)
+	client, err := NewClient(region)
 	if err != nil {
 		return err
 	}
@@ -54,7 +54,7 @@ func DoListServices(ctx context.Context, region, nsId string) error {
 }
 
 func DoModifyTTL(ctx context.Context, region, sId string, ttl int64) error {
-	client, err := rnsd.NewClient(region)
+	client, err := NewClient(region)
 	if err != nil {
 		return err
 	}
@@ -74,7 +74,7 @@ func DoModifyTTL(ctx context.Context, region, sId string, ttl int64) error {
 
 	recordType := s.DnsConfig.DnsRecords[0].Type
 
-	err = client.UpdateTTL(ctx, sId, recordType, ttl)
+	err = client.UpdateTTL(ctx, sId, *recordType, ttl)
 	if err != nil {
 		return err
 	}
