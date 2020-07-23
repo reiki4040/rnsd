@@ -8,10 +8,11 @@ import (
 
 const (
 	OPT_NAMESPACE_ID       = "namespace-id"
-	OPT_NAMESPACE_ID_SHORT = "ns"
+	OPT_NAMESPACE_ID_SHORT = "n"
 	OPT_SERVICE_ID         = "service-id"
-	OPT_SERVICE_ID_SHORT   = "srv"
+	OPT_SERVICE_ID_SHORT   = "s"
 	OPT_TTL                = "ttl"
+	OPT_TTL_SHORT          = "t"
 )
 
 var (
@@ -60,7 +61,7 @@ var (
 			},
 			&cli.Int64Flag{
 				Name:     OPT_TTL,
-				Aliases:  nil,
+				Aliases:  []string{OPT_TTL_SHORT},
 				Usage:    "specify set TTL seconds",
 				Required: true,
 			},
