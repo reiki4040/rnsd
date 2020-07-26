@@ -19,9 +19,14 @@ const (
 )
 
 var (
+	version  string
+	revision string
+
 	app = &cli.App{
-		Name:  "rnsd",
-		Usage: "control AWS Service Discovery",
+		Name:    "rnsd",
+		Usage:   "control AWS Service Discovery",
+		Version: version + "(" + revision + ")",
+
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:     OPT_REGION,
