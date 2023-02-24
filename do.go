@@ -3,8 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-
-	"github.com/aws/aws-sdk-go/aws"
 )
 
 func DoListNamespaces(ctx context.Context, region string) error {
@@ -41,10 +39,10 @@ func DoListServices(ctx context.Context, region, nsId string) error {
 	}
 
 	for _, srv := range serviceList {
-		fmt.Printf("%s\t%s\t%s", aws.StringValue(srv.Id), aws.StringValue(srv.Name), aws.StringValue(srv.Name)+"."+aws.StringValue(ns.Name))
+		fmt.Printf("%s\t%s\t%s", *srv.Id, *srv.Name, *srv.Name+"."+*ns.Name)
 		if len(srv.DnsConfig.DnsRecords) > 0 {
 			for _, d := range srv.DnsConfig.DnsRecords {
-				fmt.Printf("\t%s\t%d", aws.StringValue(d.Type), aws.Int64Value(d.TTL))
+				fmt.Printf("\t%s\t%d", d.Type, *d.TTL)
 			}
 		}
 		fmt.Println()
@@ -72,9 +70,21 @@ func DoModifyTTL(ctx context.Context, region, sId string, ttl int64) error {
 		return fmt.Errorf("service does not have DNS")
 	}
 
-	recordType := s.DnsConfig.DnsRecords[0].Type
+	/*
+		var recordType types.RecordType
+		switch s.DnsConfig.DnsRecords[0].Type {
+		case "A":
+			recordType = types.RecordTypeA
+		case "CNAME":
+			recordType = types.RecordTypeCname
+		case "SRV":
+			recordType = types.RecordTypeSrv
+		default:
+			return fmt.Errorf("unsupported recorde type %s: ", s.DnsConfig.DnsRecords[0].Type)
+		}
+	*/
 
-	err = client.UpdateTTL(ctx, sId, *recordType, ttl)
+	err = client.UpdateTTL(ctx, sId, s.DnsConfig.DnsRecords[0].Type, ttl)
 	if err != nil {
 		return err
 	}
