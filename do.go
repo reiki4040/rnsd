@@ -70,20 +70,6 @@ func DoModifyTTL(ctx context.Context, region, sId string, ttl int64) error {
 		return fmt.Errorf("service does not have DNS")
 	}
 
-	/*
-		var recordType types.RecordType
-		switch s.DnsConfig.DnsRecords[0].Type {
-		case "A":
-			recordType = types.RecordTypeA
-		case "CNAME":
-			recordType = types.RecordTypeCname
-		case "SRV":
-			recordType = types.RecordTypeSrv
-		default:
-			return fmt.Errorf("unsupported recorde type %s: ", s.DnsConfig.DnsRecords[0].Type)
-		}
-	*/
-
 	err = client.UpdateTTL(ctx, sId, s.DnsConfig.DnsRecords[0].Type, ttl)
 	if err != nil {
 		return err
