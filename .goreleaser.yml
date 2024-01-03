@@ -19,12 +19,12 @@ builds:
       - windows
     goarch:
       - amd64
+      - arm64
 archives:
   - name_template: >-
       {{ .ProjectName }}_
       {{- title .Os }}_
       {{- if eq .Arch "amd64" }}x86_64
-      {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
     format_overrides:
       - goos: windows
@@ -32,13 +32,18 @@ archives:
 release:
   prerelease: auto
 
+# https://goreleaser.com/customization/changelog/
+# disabled auto create changelog from commit message.
+changelog:
+  skip: true
+
 # homebrew
 brews:
   - description: "control AWS Service Discovery command"
-    tap:
+    repository:
       owner: reiki4040
       name: homebrew-tap
-      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+      token: "{{ .Env.GH_PAT }}"
     homepage: "https://github.com/reiki4040/rnsd"
     install: |
       bin.install "rnsd"
